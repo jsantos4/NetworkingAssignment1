@@ -9,12 +9,10 @@ public class Client {
 
     }
 
-    public void sendMessage(int size) {
+    public void sendMessage(int size, String address) {
         try {
             String host = "localhost";
             int port = 25000;
-            InetAddress address = InetAddress.getByName(host);
-            System.out.println(address);
             socket = new Socket(address, port);
 
             //Send the message to the server
