@@ -27,7 +27,7 @@ public class Server {
             java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             os.write(bytes);
-            System.out.println("Message sent to the client is " + size);
+            System.out.println("Size sent to the client: " + size);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

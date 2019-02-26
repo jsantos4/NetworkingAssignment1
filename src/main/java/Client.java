@@ -20,14 +20,14 @@ public class Client {
             //Send the message to the server
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             os.write(bytes);
-            long time = System.nanoTime();
+            long startTime = System.nanoTime();
 
-            System.out.println("Message sent to the server : " + size);
+            System.out.println("Size sent to the server : " + size);
 
             //Get the return message from the server
             DataInputStream is = new DataInputStream(socket.getInputStream());
             InputStreamReader isr = new InputStreamReader(is);
-            time = System.nanoTime() - time;
+            long time = System.nanoTime() - startTime;
             System.out.println("RTT in nanoseconds: " + time);
         } catch (Exception exception) {
             exception.printStackTrace();
