@@ -7,13 +7,16 @@ public class Server {
     private static Socket socket;
     private ServerSocket serverSocket;
 
-    public Server() throws IOException {
-        serverSocket = new ServerSocket(0);
+    public Server(){
+        try {
+            serverSocket = new ServerSocket(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void receiveMessage() {
         try {
-            System.out.println(serverSocket.getLocalPort());
             System.out.println("Server listening");
 
             socket = serverSocket.accept();
