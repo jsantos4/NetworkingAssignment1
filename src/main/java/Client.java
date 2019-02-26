@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Client {
 
@@ -14,10 +15,12 @@ public class Client {
             int port = 2689;
 
             socket = new Socket(address, port);
+            byte[] bytes = new byte[size];
+            java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(8));
 
             //Send the message to the server
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-            os.write(new byte[size]);
+            os.write(bytes);
             long time = System.nanoTime();
 
             System.out.println("Message sent to the server : " + size);
