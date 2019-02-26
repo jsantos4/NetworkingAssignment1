@@ -12,17 +12,14 @@ public class Server {
     public void receiveMessage(int size) {
         try {
 
-            int port = 25000;
+            int port = 2689;
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server Started and listening to the port 25000");
+            System.out.println("Server Started and listening to the port 2689");
 
-            //Server is running always. This is done using this while(true) loop
             while(true) {
-                //Reading the message from the client
                 socket = serverSocket.accept();
                 DataInputStream is = new DataInputStream(socket.getInputStream());
 
-                //Sending the response back to the client.
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 os.write(new byte[size]);
                 System.out.println("Message sent to the client is " + size);
