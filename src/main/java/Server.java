@@ -14,7 +14,7 @@ public class Server {
 
             int port = 2689;
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server Started and listening to the port 2689");
+            System.out.println("Server listening");
 
             while(true) {
                 socket = serverSocket.accept();
@@ -23,16 +23,10 @@ public class Server {
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 os.write(new byte[size]);
                 System.out.println("Message sent to the client is " + size);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
                 socket.close();
             }
-            catch(Exception e){}
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

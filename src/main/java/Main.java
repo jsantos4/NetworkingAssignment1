@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main (String [] args){
-        System.out.println("Side?");
+        System.out.println("Side? (0 == client)");
         Scanner scanner = new Scanner(System.in);
         int side = scanner.nextInt();
         Client client = new Client();
@@ -18,12 +18,18 @@ public class Main {
             String dest = scanner.next();
             try {
                 client.sendMessage(1, InetAddress.getByName(dest));
+                client.sendMessage(64, InetAddress.getByName(dest));
+                client.sendMessage(1024, InetAddress.getByName(dest));
+
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
         } else if (side == 1) {
             getAddress();
             server.receiveMessage(1);
+            server.receiveMessage(64);
+            server.receiveMessage(1024);
+
         }
     }
 

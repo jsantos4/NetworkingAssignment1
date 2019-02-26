@@ -11,7 +11,7 @@ public class Client {
 
     public void sendMessage(int size, InetAddress address) {
         try {
-            int port = 25000;
+            int port = 2689;
 
             socket = new Socket(address, port);
 
