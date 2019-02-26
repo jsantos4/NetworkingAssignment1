@@ -14,12 +14,13 @@ public class Main {
         Server server = new Server();
 
         if (side == 0) {
-            System.out.println("Destination?");
+            System.out.println("Destination? (Address <ENTER> Port)");
             String dest = scanner.next();
+            int port = scanner.nextInt();
             try {
-                client.sendMessage(1, InetAddress.getByName(dest));
-                client.sendMessage(64, InetAddress.getByName(dest));
-                client.sendMessage(1024, InetAddress.getByName(dest));
+                client.sendMessage(1, InetAddress.getByName(dest), port);
+                client.sendMessage(64, InetAddress.getByName(dest), port);
+                client.sendMessage(1024, InetAddress.getByName(dest), port);
 
             } catch (UnknownHostException e) {
                 e.printStackTrace();

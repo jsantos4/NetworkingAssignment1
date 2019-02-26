@@ -11,9 +11,8 @@ public class Server {
 
     public void receiveMessage() {
         try {
-
-            int port = 2689;
-            ServerSocket serverSocket = new ServerSocket(port);
+            ServerSocket serverSocket = new ServerSocket(0);
+            System.out.println(serverSocket.getLocalPort());
             System.out.println("Server listening");
 
             socket = serverSocket.accept();

@@ -10,9 +10,8 @@ public class Client {
 
     }
 
-    public void sendMessage(int size, InetAddress address) {
+    public void sendMessage(int size, InetAddress address, int port) {
         try {
-            int port = 2689;
 
             socket = new Socket(address, port);
             byte[] bytes = new byte[size];
