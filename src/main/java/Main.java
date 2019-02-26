@@ -26,9 +26,9 @@ public class Main {
             }
         } else if (side == 1) {
             getAddress();
-            server.receiveMessage(1);
-            server.receiveMessage(64);
-            server.receiveMessage(1024);
+            server.receiveMessage();
+            server.receiveMessage();
+            server.receiveMessage();
 
         }
     }
