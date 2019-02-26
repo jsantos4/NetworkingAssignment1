@@ -7,12 +7,12 @@ public class Server {
     private static Socket socket;
     private ServerSocket serverSocket;
 
-    public Server(){
+    public Server() throws IOException {
+        serverSocket = new ServerSocket(0);
     }
 
     public void receiveMessage() {
         try {
-            serverSocket = new ServerSocket(0);
             System.out.println(serverSocket.getLocalPort());
             System.out.println("Server listening");
 
@@ -26,7 +26,7 @@ public class Server {
             os.write(bytes);
             System.out.println("Message sent to the client is " + size);
             socket.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
