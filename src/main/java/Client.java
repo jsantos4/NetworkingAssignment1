@@ -9,9 +9,8 @@ public class Client {
 
     }
 
-    public void sendMessage(int size, String address) {
+    public void sendMessage(int size, InetAddress address) {
         try {
-            String host = "localhost";
             int port = 25000;
             socket = new Socket(address, port);
 

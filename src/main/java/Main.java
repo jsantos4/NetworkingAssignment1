@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +16,11 @@ public class Main {
         if (side == 0) {
             System.out.println("Destination?");
             String dest = scanner.next();
-            client.sendMessage(1, dest);
+            try {
+                client.sendMessage(1, InetAddress.getByName(dest));
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         } else if (side == 1) {
             getAddress();
             server.receiveMessage(1);
