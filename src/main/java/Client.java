@@ -26,7 +26,7 @@ public class Client {
             DataInputStream is = new DataInputStream(socket.getInputStream());
             InputStreamReader isr = new InputStreamReader(is);
             time = System.nanoTime() - time;
-            System.out.println("Message received from the server : " + size);
+            System.out.println("Message received from the server : " + isr.read());
             System.out.println(time);
         } catch (Exception exception) {
             exception.printStackTrace();

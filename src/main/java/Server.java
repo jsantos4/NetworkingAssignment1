@@ -9,22 +9,21 @@ public class Server {
 
     }
 
-    public void receiveMessage(int size) {
+    public void receiveMessage() {
         try {
 
             int port = 2689;
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server listening");
 
-            while(true) {
-                socket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(socket.getInputStream());
+            socket = serverSocket.accept();
+            DataInputStream is = new DataInputStream(socket.getInputStream());
+            int size = is.available();
 
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                os.write(new byte[size]);
-                System.out.println("Message sent to the client is " + size);
-                socket.close();
-            }
+            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+            os.write(new byte[size]);
+            System.out.println("Message sent to the client is " + size);
+            socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
