@@ -15,7 +15,7 @@ public class Client {
 
             socket = new Socket(address, port);
             byte[] bytes = new byte[size];
-            java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(8));
+            java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
 
             //Send the message to the server
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -28,8 +28,7 @@ public class Client {
             DataInputStream is = new DataInputStream(socket.getInputStream());
             InputStreamReader isr = new InputStreamReader(is);
             time = System.nanoTime() - time;
-            System.out.println("Message received from the server : " + isr.read());
-            System.out.println(time);
+            System.out.println("RTT in nanoseconds: " + time);
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {

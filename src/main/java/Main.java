@@ -27,6 +27,8 @@ public class Main {
             }
         } else if (side == 1) {
             getAddress();
+            server.getPort();
+
             server.receiveMessage();
             server.receiveMessage();
             server.receiveMessage();
