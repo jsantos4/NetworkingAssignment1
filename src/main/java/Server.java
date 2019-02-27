@@ -17,13 +17,12 @@ public class Server {
         }
     }
 
-    public void receiveTCPMessage() {
+    public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
 
             socket = serverSocket.accept();
             DataInputStream is = new DataInputStream(socket.getInputStream());
-            int size = is.available();
 
             byte[] bytes = new byte[size];
             java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));

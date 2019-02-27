@@ -36,9 +36,9 @@ public class Main {
             getAddress();
             server.getPort();
 
-            server.receiveTCPMessage();
-            server.receiveTCPMessage();
-            server.receiveTCPMessage();
+            server.receiveTCPMessage(1);
+            server.receiveTCPMessage(64);
+            server.receiveTCPMessage(1024);
 
             server.receiveUDPMessage(1);
             server.receiveUDPMessage(64);
