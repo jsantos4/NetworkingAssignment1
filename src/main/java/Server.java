@@ -37,6 +37,7 @@ public class Server {
     }
 
     public void receiveUDPMessage(int size) {
+
         try {
             System.out.println("Server listening");
 
@@ -48,13 +49,15 @@ public class Server {
             udpSocket.send(packet);
             System.out.println("Size sent to the client: " + size);
             udpSocket.close();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void getPort() {
-        System.out.println(serverSocket.getLocalPort());
+        System.out.println("TCP Port: " + serverSocket.getLocalPort());
+        System.out.println("UDP Port: " + udpSocket.getLocalPort());
     }
 }

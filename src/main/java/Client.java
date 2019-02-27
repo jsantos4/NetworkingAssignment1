@@ -63,7 +63,6 @@ public class Client {
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
-            //Closing the socket
             try {
                 udpSocket.close();
             } catch (Exception e) {

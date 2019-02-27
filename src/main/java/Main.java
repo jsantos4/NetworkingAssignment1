@@ -14,16 +14,19 @@ public class Main {
         if (side == 0) {
             System.out.println("Destination?");
             String dest = scanner.next();
-            System.out.println("Port?");
-            int port = scanner.nextInt();
-            try {
-                client.sendTCPMessage(1, InetAddress.getByName(dest), port);
-                client.sendTCPMessage(64, InetAddress.getByName(dest), port);
-                client.sendTCPMessage(1024, InetAddress.getByName(dest), port);
+            System.out.println("TCP Port?");
+            int tcpPort = scanner.nextInt();
+            System.out.println("UDP Port?");
+            int udpPort = scanner.nextInt();
 
-                client.sendUDPMessage(1, InetAddress.getByName(dest), port);
-                client.sendUDPMessage(64, InetAddress.getByName(dest), port);
-                client.sendUDPMessage(1024, InetAddress.getByName(dest), port);
+            try {
+                client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
+                client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
+                client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
+
+                client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
+                client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
+                client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
 
 
             } catch (UnknownHostException e) {
@@ -60,6 +63,6 @@ public class Main {
             catch (Exception e) {
                 systemipaddress = "Cannot Execute Properly";
             }
-            System.out.println("Public IP Address: " + systemipaddress +"\n");
+            System.out.println("Public IP Address: " + systemipaddress);
     }
 }
