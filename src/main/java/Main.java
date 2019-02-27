@@ -20,6 +20,11 @@ public class Main {
                 client.sendTCPMessage(64, InetAddress.getByName(dest), port);
                 client.sendTCPMessage(1024, InetAddress.getByName(dest), port);
 
+                client.sendUDPMessage(1, InetAddress.getByName(dest), port);
+                client.sendUDPMessage(64, InetAddress.getByName(dest), port);
+                client.sendUDPMessage(1024, InetAddress.getByName(dest), port);
+
+
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -28,6 +33,10 @@ public class Main {
             server.getPort();
 
             server.receiveTCPMessage();
+            server.receiveTCPMessage();
+            server.receiveTCPMessage();
+
+            server.receiveUDPMessage();
             server.receiveTCPMessage();
             server.receiveTCPMessage();
 

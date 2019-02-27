@@ -6,10 +6,12 @@ public class Server {
 
     private static Socket socket;
     private ServerSocket serverSocket;
+    private DatagramSocket udpSocket;
 
     public Server(){
         try {
             serverSocket = new ServerSocket(0);
+            udpSocket = new DatagramSocket(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,6 +31,24 @@ public class Server {
             os.write(bytes);
             System.out.println("Size sent to the client: " + size);
             socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void receiveUDPMessage(int size) {
+        try {
+            System.out.println("Server listening");
+
+            byte[] bytes = new byte[size];
+            DatagramPacket packet = new DatagramPacket(bytes, size);
+            udpSocket.receive(packet);
+
+            packet = new DatagramPacket(bytes, size, packet.getAddress(), packet.getPort());
+            udpSocket.send(packet);
+            System.out.println("Size sent to the client: " + size);
+            udpSocket.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
