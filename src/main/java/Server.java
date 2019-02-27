@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Server {
 
@@ -26,9 +25,16 @@ public class Server {
             byte[] bytes = new byte[size];
             is.readFully(bytes);
 
-            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-            os.write(bytes);
-            System.out.println("Size sent to the client: " + size);
+            if (size > 1024) {
+                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                os.write(new byte[1]);
+                System.out.println("Size sent to the client: 1");
+
+            } else {
+                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                os.write(bytes);
+                System.out.println("Size sent to the client: " + size);
+            }
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

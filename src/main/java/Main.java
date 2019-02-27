@@ -11,6 +11,7 @@ public class Main {
         int side = scanner.nextInt();
         Client Client = new Client();
         Server Server = new Server();
+        long[] rttTimes = new long[6];
         double[] throughputSpeeds = new double[5];
 
         if (side == 0) {
@@ -23,21 +24,27 @@ public class Main {
 
 
             try {
-                //RTTs
+
+                //RTTs----------------------------------------------------------------------------------------------------------------------------------
+                System.out.println("\n RTTs");
+                rttTimes[0] = Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
+                rttTimes[1] = Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
+                rttTimes[2] = Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
+                rttTimes[3] = Client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
+                rttTimes[4] = Client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
+                rttTimes[5] = Client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
+
                 System.out.println("TCPs 1, 64, 1024:");
-                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort));
-                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort));
-                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort));
-
+                System.out.println("RTT in nanoseconds: " + rttTimes[0]);
+                System.out.println("RTT in nanoseconds: " + rttTimes[1]);
+                System.out.println("RTT in nanoseconds: " + rttTimes[2]);
                 System.out.println("UDPs 1, 64, 1024:");
-                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort));
-                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort));
-                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort));
+                System.out.println("RTT in nanoseconds: " + rttTimes[3]);
+                System.out.println("RTT in nanoseconds: " + rttTimes[4]);
+                System.out.println("RTT in nanoseconds: " + rttTimes[5]);
 
+                //Throughput speeds-------------------------------------------------------------------------------------------------------------------
                 System.out.println("\nThroughput speeds");
-
-
-                //Throughput speeds
                 throughputSpeeds[0] = calcThroughput(Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024);
                 throughputSpeeds[1] = calcThroughput(Client.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16);
                 throughputSpeeds[2] = calcThroughput(Client.sendTCPMessage(1024 * 64, InetAddress.getByName(dest), tcpPort), 1024 * 64);
