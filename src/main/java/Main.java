@@ -1,9 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
 import java.util.Scanner;
 
 public class Main {
@@ -15,13 +11,14 @@ public class Main {
         Server server = new Server();
 
         if (side == 0) {
-            System.out.println("Destination? (Address <ENTER> Port)");
+            System.out.println("Destination?");
             String dest = scanner.next();
+            System.out.println("Port?");
             int port = scanner.nextInt();
             try {
-                client.sendMessage(1, InetAddress.getByName(dest), port);
-                client.sendMessage(64, InetAddress.getByName(dest), port);
-                client.sendMessage(1024, InetAddress.getByName(dest), port);
+                client.sendTCPMessage(1, InetAddress.getByName(dest), port);
+                client.sendTCPMessage(64, InetAddress.getByName(dest), port);
+                client.sendTCPMessage(1024, InetAddress.getByName(dest), port);
 
             } catch (UnknownHostException e) {
                 e.printStackTrace();
@@ -30,9 +27,9 @@ public class Main {
             getAddress();
             server.getPort();
 
-            server.receiveMessage();
-            server.receiveMessage();
-            server.receiveMessage();
+            server.receiveTCPMessage();
+            server.receiveTCPMessage();
+            server.receiveTCPMessage();
 
         }
     }

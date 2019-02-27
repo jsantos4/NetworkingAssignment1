@@ -15,7 +15,7 @@ public class Server {
         }
     }
 
-    public void receiveMessage() {
+    public void receiveTCPMessage() {
         try {
             System.out.println("Server listening");
 
