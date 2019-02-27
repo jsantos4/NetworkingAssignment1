@@ -55,13 +55,9 @@ public class Client {
             long startTime = System.nanoTime();
             udpSocket.send(packet);
 
-            System.out.println("Size sent to the server : " + size);
-
             packet = new DatagramPacket(bytes, size);
             udpSocket.receive(packet);
             time = System.nanoTime() - startTime;
-
-            System.out.println("RTT in nanoseconds: " + time);
 
         } catch (Exception exception) {
             exception.printStackTrace();

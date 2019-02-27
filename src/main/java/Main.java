@@ -9,8 +9,9 @@ public class Main {
         System.out.println("Side? (0 == client)");
         Scanner scanner = new Scanner(System.in);
         int side = scanner.nextInt();
-        Client rttClient = new Client();
-        Server rttServer = new Server();
+        Client Client = new Client();
+        Server Server = new Server();
+        double[] throughputSpeeds = new double[5];
 
         if (side == 0) {
             System.out.println("Destination?");
@@ -20,24 +21,32 @@ public class Main {
             System.out.println("UDP Port?");
             int udpPort = scanner.nextInt();
 
+            System.out.println("\nThroughput speeds");
+
             try {
                 //RTTs
-                rttClient.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
-                rttClient.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
-                rttClient.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
+                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort));
+                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort));
+                System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort));
 
-                rttClient.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
-                rttClient.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
-                rttClient.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
+                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort));
+                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort));
+                System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort));
 
                 System.out.println();
 
                 //Throughput speeds
-                System.out.println("Speed of 1K: " + calcThroughput(rttClient.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024) + " bits/S");
-                System.out.println("Speed of 16K: " + calcThroughput(rttClient.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16) + " bits/S");
-                System.out.println("Speed of 64K: " + calcThroughput(rttClient.sendTCPMessage(1024 * 64, InetAddress.getByName(dest), tcpPort), 1024 * 64) + " bits/S");
-                System.out.println("Speed of 256K: " + calcThroughput(rttClient.sendTCPMessage(1024 * 256, InetAddress.getByName(dest), tcpPort), 1024 * 256) + " bits/S");
-                System.out.println("Speed of 1M: " + calcThroughput(rttClient.sendTCPMessage(1024 * 1000, InetAddress.getByName(dest), tcpPort), 1024 * 1000) + " bits/S");
+                throughputSpeeds[0] = calcThroughput(Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024);
+                throughputSpeeds[1] = calcThroughput(Client.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16);
+                throughputSpeeds[2] = calcThroughput(Client.sendTCPMessage(1024 * 64, InetAddress.getByName(dest), tcpPort), 1024 * 64);
+                throughputSpeeds[3] = calcThroughput(Client.sendTCPMessage(1024 * 256, InetAddress.getByName(dest), tcpPort), 1024 * 256);
+                throughputSpeeds[4] = calcThroughput(Client.sendTCPMessage(1024 * 1000, InetAddress.getByName(dest), tcpPort), 1024 * 1000);
+
+                System.out.println("Speed of 1K: " + throughputSpeeds[0] + " bits/S");
+                System.out.println("Speed of 16K: " + throughputSpeeds[1] + " bits/S");
+                System.out.println("Speed of 64K: " + throughputSpeeds[2] + " bits/S");
+                System.out.println("Speed of 256K: " + throughputSpeeds[3] + " bits/S");
+                System.out.println("Speed of 1M: " + throughputSpeeds[4] + " bits/S");
 
 
             } catch (UnknownHostException e) {
@@ -45,21 +54,21 @@ public class Main {
             }
         } else if (side == 1) {
             getAddress();
-            rttServer.getPort();
+            Server.getPort();
 
-            rttServer.receiveTCPMessage(1);
-            rttServer.receiveTCPMessage(64);
-            rttServer.receiveTCPMessage(1024);
+            Server.receiveTCPMessage(1);
+            Server.receiveTCPMessage(64);
+            Server.receiveTCPMessage(1024);
 
-            rttServer.receiveUDPMessage(1);
-            rttServer.receiveUDPMessage(64);
-            rttServer.receiveUDPMessage(1024);
+            Server.receiveUDPMessage(1);
+            Server.receiveUDPMessage(64);
+            Server.receiveUDPMessage(1024);
 
-            rttServer.receiveTCPMessage(1024);
-            rttServer.receiveTCPMessage(1024 * 16);
-            rttServer.receiveTCPMessage(1024 * 64);
-            rttServer.receiveTCPMessage(1024 * 256);
-            rttServer.receiveTCPMessage(1024 * 1000);
+            Server.receiveTCPMessage(1024);
+            Server.receiveTCPMessage(1024 * 16);
+            Server.receiveTCPMessage(1024 * 64);
+            Server.receiveTCPMessage(1024 * 256);
+            Server.receiveTCPMessage(1024 * 1000);
 
 
         }
@@ -77,8 +86,7 @@ public class Main {
             try {
                 URL url_name = new URL("http://bot.whatismyipaddress.com");
 
-                BufferedReader sc =
-                        new BufferedReader(new InputStreamReader(url_name.openStream()));
+                BufferedReader sc = new BufferedReader(new InputStreamReader(url_name.openStream()));
 
                 // reads system IPAddress
                 systemipaddress = sc.readLine().trim();
