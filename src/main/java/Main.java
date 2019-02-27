@@ -29,6 +29,8 @@ public class Main {
                 client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
                 client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
 
+                System.out.println();
+
                 //Throughput speeds
                 System.out.println("Speed of 1K: " + calcThroughput(client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024));
                 System.out.println("Speed of 16K: " + calcThroughput(client.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16));
@@ -51,6 +53,13 @@ public class Main {
             server.receiveUDPMessage(1);
             server.receiveUDPMessage(64);
             server.receiveUDPMessage(1024);
+
+            server.receiveTCPMessage(1024);
+            server.receiveTCPMessage(1024 * 16);
+            server.receiveTCPMessage(1024 * 64);
+            server.receiveTCPMessage(1024 * 256);
+            server.receiveTCPMessage(1024 * 1000);
+
 
         }
     }
