@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -13,6 +14,8 @@ public class Main {
         Server Server = new Server();
         long[] rttTimes = new long[6];
         double[] throughputSpeeds = new double[5];
+        long[] oneMtcpVariations = new long[3];
+        long[] oneMudpVariations = new long[3];
 
         if (side == 0) {
             System.out.println("Destination?");
@@ -56,6 +59,20 @@ public class Main {
                 System.out.println("Speed of 64K: " + throughputSpeeds[2] + " bits/S");
                 System.out.println("Speed of 256K: " + throughputSpeeds[3] + " bits/S");
                 System.out.println("Speed of 1M: " + throughputSpeeds[4] + " bits/S");
+
+                //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
+                System.out.println("\n1MB variations");
+                oneMtcpVariations = Client.sendTCPcombos(InetAddress.getByName(dest), tcpPort);
+                oneMudpVariations = Client.sendUDPcombos(InetAddress.getByName(dest), udpPort);
+
+                System.out.println("TCPs 1024x1024, 2048x512, 4096x256:");
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[0]));
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[1]));
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[2]));
+                System.out.println("UDPs 1024x1024, 2048x512, 4096x256:");
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[0]));
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[1]));
+                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[2]));
 
 
             } catch (UnknownHostException e) {

@@ -40,6 +40,18 @@ public class Client {
 
     }
 
+    public long[] sendTCPcombos(InetAddress address, int port) {
+        long[] tcpTimes = new long[3];
+        for (int i = 0; i < 1024; ++i)
+            tcpTimes[0] += sendTCPMessage(1024, address, port);
+        for (int j = 0; j < 2048; ++j)
+            tcpTimes[1] += sendTCPMessage(512, address, port);
+        for (int k = 0; k < 4096; ++k)
+            tcpTimes[2] += sendTCPMessage(256, address, port);
+
+        return tcpTimes;
+    }
+
     public long sendUDPMessage(int size, InetAddress address, int port) {
         long time = 0;
         try {
@@ -66,5 +78,17 @@ public class Client {
             }
         }
         return time;
+    }
+
+    public long[] sendUDPcombos(InetAddress address, int port) {
+        long[] udpTimes = new long[3];
+        for (int i = 0; i < 1024; ++i)
+            udpTimes[0] += sendUDPMessage(1024, address, port);
+        for (int j = 0; j < 2048; ++j)
+            udpTimes[1] += sendUDPMessage(512, address, port);
+        for (int k = 0; k < 4096; ++k)
+            udpTimes[2] += sendUDPMessage(256, address, port);
+
+        return udpTimes;
     }
 }
