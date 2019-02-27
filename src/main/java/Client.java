@@ -44,10 +44,10 @@ public class Client {
     public void sendUDPMessage(int size, InetAddress address, int port) {
         try {
 
-            udpSocket = new DatagramSocket(port, address);
+            udpSocket = new DatagramSocket();
             byte[] bytes = new byte[size];
             Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
-            DatagramPacket packet = new DatagramPacket(bytes, size);
+            DatagramPacket packet = new DatagramPacket(bytes, size, address, port);
 
             long startTime = System.nanoTime();
             udpSocket.send(packet);
