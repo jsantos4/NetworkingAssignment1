@@ -20,6 +20,7 @@ public class Main {
             int udpPort = scanner.nextInt();
 
             try {
+                //RTTs
                 client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
                 client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
                 client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
@@ -27,6 +28,13 @@ public class Main {
                 client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
                 client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
                 client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
+
+                //Throughput speeds
+                System.out.println("Speed of 1K: " + calcThroughput(client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024));
+                System.out.println("Speed of 16K: " + calcThroughput(client.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16));
+                System.out.println("Speed of 64K: " + calcThroughput(client.sendTCPMessage(1024 * 64, InetAddress.getByName(dest), tcpPort), 1024 * 64));
+                System.out.println("Speed of 256K: " + calcThroughput(client.sendTCPMessage(1024 * 256, InetAddress.getByName(dest), tcpPort), 1024 * 256));
+                System.out.println("Speed of 1M: " + calcThroughput(client.sendTCPMessage(1024 * 1000, InetAddress.getByName(dest), tcpPort), 1024 * 1000));
 
 
             } catch (UnknownHostException e) {
@@ -45,6 +53,11 @@ public class Main {
             server.receiveUDPMessage(1024);
 
         }
+    }
+
+    private static double calcThroughput(long time, int size) {
+        double bits = (double)size/8.0;
+        return bits/((double)time/1000000000);
     }
 
     private static void getAddress() {

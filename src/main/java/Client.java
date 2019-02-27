@@ -12,7 +12,8 @@ public class Client {
 
     }
 
-    public void sendTCPMessage(int size, InetAddress address, int port) {
+    public long sendTCPMessage(int size, InetAddress address, int port) {
+        long time = 0;
         try {
 
             tcpSocket = new Socket(address, port);
@@ -27,7 +28,7 @@ public class Client {
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             InputStreamReader isr = new InputStreamReader(is);
-            long time = System.nanoTime() - startTime;
+            time = System.nanoTime() - startTime;
             System.out.println("RTT in nanoseconds: " + time);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -38,10 +39,12 @@ public class Client {
                 e.printStackTrace();
             }
         }
+        return time;
 
     }
 
-    public void sendUDPMessage(int size, InetAddress address, int port) {
+    public long sendUDPMessage(int size, InetAddress address, int port) {
+        long time = 0;
         try {
 
             udpSocket = new DatagramSocket();
@@ -56,7 +59,7 @@ public class Client {
 
             packet = new DatagramPacket(bytes, size);
             udpSocket.receive(packet);
-            long time = System.nanoTime() - startTime;
+            time = System.nanoTime() - startTime;
 
             System.out.println("RTT in nanoseconds: " + time);
 
@@ -69,5 +72,6 @@ public class Client {
                 e.printStackTrace();
             }
         }
+        return time;
     }
 }
