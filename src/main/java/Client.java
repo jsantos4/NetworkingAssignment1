@@ -24,12 +24,10 @@ public class Client {
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
 
-            System.out.println("Size sent to the server : " + size);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             is.readFully(bytes);
             time = System.nanoTime() - startTime;
-            System.out.println("RTT in nanoseconds: " + time);
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {

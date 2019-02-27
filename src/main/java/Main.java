@@ -21,19 +21,21 @@ public class Main {
             System.out.println("UDP Port?");
             int udpPort = scanner.nextInt();
 
-            System.out.println("\nThroughput speeds");
 
             try {
                 //RTTs
+                System.out.println("TCPs 1, 64, 1024:");
                 System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort));
                 System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort));
                 System.out.println("RTT in nanoseconds: " + Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort));
 
+                System.out.println("UDPs 1, 64, 1024:");
                 System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort));
                 System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort));
                 System.out.println("RTT in nanoseconds: " + Client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort));
 
-                System.out.println();
+                System.out.println("\nThroughput speeds");
+
 
                 //Throughput speeds
                 throughputSpeeds[0] = calcThroughput(Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024);
