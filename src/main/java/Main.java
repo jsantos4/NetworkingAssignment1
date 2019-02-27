@@ -3,6 +3,7 @@ import java.net.*;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main (String [] args){
         System.out.println("Side? (0 == client)");
         Scanner scanner = new Scanner(System.in);
@@ -36,9 +37,9 @@ public class Main {
             server.receiveTCPMessage();
             server.receiveTCPMessage();
 
-            server.receiveUDPMessage();
-            server.receiveTCPMessage();
-            server.receiveTCPMessage();
+            server.receiveUDPMessage(1);
+            server.receiveUDPMessage(64);
+            server.receiveUDPMessage(1024);
 
         }
     }
