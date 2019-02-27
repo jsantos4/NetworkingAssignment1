@@ -27,7 +27,7 @@ public class Client {
             System.out.println("Size sent to the server : " + size);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-            InputStreamReader isr = new InputStreamReader(is);
+            is.readFully(bytes);
             time = System.nanoTime() - startTime;
             System.out.println("RTT in nanoseconds: " + time);
         } catch (Exception exception) {

@@ -23,9 +23,9 @@ public class Server {
 
             socket = serverSocket.accept();
             DataInputStream is = new DataInputStream(socket.getInputStream());
-
             byte[] bytes = new byte[size];
-            java.util.Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
+            is.readFully(bytes);
+
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             os.write(bytes);
             System.out.println("Size sent to the client: " + size);
