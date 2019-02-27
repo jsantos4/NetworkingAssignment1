@@ -24,13 +24,8 @@ public class Client {
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
 
-            if (size > 1024) {
-                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-                is.readByte();
-            } else {
-                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-                is.readFully(bytes);
-            }
+            DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
+            is.readFully(bytes);
             time = System.nanoTime() - startTime;
         } catch (Exception exception) {
             exception.printStackTrace();

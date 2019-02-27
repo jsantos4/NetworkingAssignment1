@@ -24,17 +24,9 @@ public class Server {
             DataInputStream is = new DataInputStream(socket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
-
-            if (size > 1024) {
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                os.write(new byte[1]);
-                System.out.println("Size sent to the client: 1");
-
-            } else {
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                os.write(bytes);
-                System.out.println("Size sent to the client: " + size);
-            }
+            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+            os.write(bytes);
+            System.out.println("Size sent to the client: " + size);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
