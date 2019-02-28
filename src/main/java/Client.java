@@ -118,7 +118,7 @@ public class Client {
 
     public long[] sendUDPCombos() throws IOException{
         long[] udpTimes = new long[3];
-        udpSocket = new DatagramSocket(port, InetAddress.getByName(address));
+        udpSocket = new DatagramSocket();
         byte[] oneKB = new byte[1024];
         byte[] halfKB = new byte[512];
         byte[] quarterKB = new byte[256];
