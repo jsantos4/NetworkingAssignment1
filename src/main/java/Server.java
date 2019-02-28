@@ -19,8 +19,8 @@ public class Server {
     public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
-            socket.setSoTimeout(10000);
             socket = serverSocket.accept();
+            socket.setSoTimeout(10000);
             DataInputStream is = new DataInputStream(socket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
