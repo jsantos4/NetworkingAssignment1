@@ -58,11 +58,11 @@ public class Server {
             serverSocket.setSoTimeout(2000);
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
+            socket = serverSocket.accept();
             for (int i = 0; i < 1024; ++i) {
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
-                socket = serverSocket.accept();
                 DataInputStream is = new DataInputStream(socket.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
