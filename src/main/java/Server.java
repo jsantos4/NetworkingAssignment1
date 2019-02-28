@@ -11,7 +11,8 @@ public class Server {
         try {
             serverSocket = new ServerSocket(0);
             udpSocket = new DatagramSocket(0);
-        } catch (IOException e) {
+            serverSocket.setSoTimeout(10000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
