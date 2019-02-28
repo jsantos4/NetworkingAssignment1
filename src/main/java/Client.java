@@ -5,7 +5,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Client {
 
-    private static Socket tcpSocket;
     private static DatagramSocket udpSocket;
     private String address;
     private int port;
@@ -19,7 +18,7 @@ public class Client {
     public long sendTCPMessage(int size) {
         long time = 0;
         try {
-            tcpSocket = new Socket(InetAddress.getByName(address), port);
+            Socket tcpSocket = new Socket(InetAddress.getByName(address), port);
             tcpSocket.setSoTimeout(2000);
             DataOutputStream os;
             DataInputStream is = null;
@@ -54,7 +53,7 @@ public class Client {
     public long[] sendTCPCombos() throws IOException{
 
         long[] tcpTimes = new long[3];
-        tcpSocket = new Socket(InetAddress.getByName(address), port);
+        Socket tcpSocket = new Socket(InetAddress.getByName(address), port);
         DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
         DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
         byte[] oneKB = new byte[1024];

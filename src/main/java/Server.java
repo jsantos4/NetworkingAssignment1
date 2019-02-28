@@ -4,7 +4,6 @@ import java.net.*;
 public class Server {
 
     private ServerSocket serverSocket;
-    private Socket tcpSocket;
     private DatagramSocket udpSocket;
 
     public Server(){
@@ -19,7 +18,7 @@ public class Server {
     public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
-            tcpSocket = serverSocket.accept();
+            Socket tcpSocket = serverSocket.accept();
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
@@ -55,7 +54,7 @@ public class Server {
 
     public void receiveCombos() {
         try {
-            tcpSocket = null;
+            Socket tcpSocket = null;
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             while (tcpSocket == null) {
