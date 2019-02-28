@@ -61,6 +61,7 @@ public class Server {
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
+                System.out.println(i);
                 while (socket == null) {
                     try {
                         socket = serverSocket.accept();
