@@ -96,7 +96,7 @@ public class Main {
             Server.receiveTCPMessage(1024 * 256);
             Server.receiveTCPMessage(1024 * 1000);
 
-            Server.recieveCombos();
+            Server.receiveCombos();
 
 
         }

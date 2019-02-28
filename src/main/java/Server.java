@@ -52,19 +52,19 @@ public class Server {
 
     }
 
-    public void recieveCombos() {
+    public void receiveCombos() {
         try {
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
-                socket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(socket.getInputStream());
+                Socket socket1 = serverSocket.accept();
+                DataInputStream is = new DataInputStream(socket1.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                DataOutputStream os = new DataOutputStream(socket1.getOutputStream());
                 byte[] echo = {(byte)0};
                 os.write(echo);
-                socket.close();
+                socket1.close();
             }
             System.out.println("Receiving 512s");
             for (int j = 0; j < 2048; ++j) {

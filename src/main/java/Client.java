@@ -25,7 +25,7 @@ public class Client {
             os.write(bytes);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-            System.out.println(is.available());
+            System.out.println(is.readByte());
             if (is.readByte() == (byte)0) {
                 time = System.nanoTime() - startTime;
             } else {
