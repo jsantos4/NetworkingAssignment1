@@ -3,7 +3,7 @@ import java.net.*;
 
 public class Server {
 
-    private static Socket socket;
+    private Socket socket;
     private ServerSocket serverSocket;
     private DatagramSocket udpSocket;
 
@@ -11,6 +11,7 @@ public class Server {
         try {
             serverSocket = new ServerSocket(0);
             udpSocket = new DatagramSocket(0);
+            serverSocket.setSoTimeout(2000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -19,7 +20,13 @@ public class Server {
     public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
-            socket = serverSocket.accept();
+            while (socket == null) {
+                try {
+                    socket = serverSocket.accept();
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Accept timed out: trying again");
+                }
+            }
             DataInputStream is = new DataInputStream(socket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);

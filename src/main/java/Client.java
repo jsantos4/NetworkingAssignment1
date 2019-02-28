@@ -19,7 +19,7 @@ public class Client {
             tcpSocket = new Socket(address, port);
             tcpSocket.setSoTimeout(2000);
             DataOutputStream os;
-            DataInputStream is;
+            DataInputStream is = null;
             byte[] bytes = new byte[size];
             Arrays.fill(bytes, (byte)8 );
 
@@ -27,7 +27,13 @@ public class Client {
             os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
 
-            is = new DataInputStream(tcpSocket.getInputStream());
+            while (is == null) {
+                try {
+                    is = new DataInputStream(tcpSocket.getInputStream());
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Waiting for response");
+                }
+            }
             is.readByte();
             time = System.nanoTime() - startTime;
 
