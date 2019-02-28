@@ -110,7 +110,7 @@ public class Server {
             DatagramPacket oneKBpacket = new DatagramPacket(oneKB, 1024);
             DatagramPacket halfKBpacket = new DatagramPacket(halfKB, 512);
             DatagramPacket quarterKBpacket = new DatagramPacket(quarterKB, 256);
-            DatagramPacket echo = new DatagramPacket(echoArr, 1);
+            DatagramPacket echo;
 
             System.out.println("Receiving 1024s");
             for (int l = 0; l < 1024; ++l) {
@@ -118,6 +118,7 @@ public class Server {
                     System.out.println("50%");
                 }
                 udpSocket.receive(oneKBpacket);
+                echo = new DatagramPacket(echoArr, 1, oneKBpacket.getAddress(), oneKBpacket.getPort());
                 udpSocket.send(echo);
             }
 
@@ -127,6 +128,7 @@ public class Server {
                     System.out.println("50%");
                 }
                 udpSocket.receive(halfKBpacket);
+                echo = new DatagramPacket(echoArr, 1, halfKBpacket.getAddress(), halfKBpacket.getPort());
                 udpSocket.send(echo);
             }
 
@@ -136,6 +138,7 @@ public class Server {
                     System.out.println("50%");
                 }
                 udpSocket.receive(quarterKBpacket);
+                echo = new DatagramPacket(echoArr, 1, quarterKBpacket.getAddress(), quarterKBpacket.getPort());
                 udpSocket.send(echo);
             }
         } catch (IOException e) {
