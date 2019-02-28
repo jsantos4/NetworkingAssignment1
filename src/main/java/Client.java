@@ -27,11 +27,15 @@ public class Client {
             os.write(bytes);
 
             is = new DataInputStream(tcpSocket.getInputStream());
-            for (int i = 0; i < size; ++i)
-                is.readByte();
+            if (is.readByte() == 0){
+                
+            } else {
+                for (int i = 0; i < size; ++i)
+                    is.readByte();
+            }
             time = System.nanoTime() - startTime;
 
-        } catch (Exception exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
         } finally {
             try {
