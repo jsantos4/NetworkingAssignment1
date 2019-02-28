@@ -27,7 +27,7 @@ public class Client {
             os.write(bytes);
 
             is = new DataInputStream(tcpSocket.getInputStream());
-            System.out.println(is.readByte());
+            is.readByte();
             time = System.nanoTime() - startTime;
 
         } catch (IOException exception) {
