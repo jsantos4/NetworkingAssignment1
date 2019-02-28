@@ -103,8 +103,8 @@ public class Main {
     }
 
     private static double calcThroughput(long time, int size) {
-        double megabits = ((double)size * 8.0) * 1000000.0;
-        return megabits/(double)nanoToSec(time);
+        double megabits = ((double)size * 8.0);
+        return (megabits/nanoToSec(time)) * 1000000.0;
     }
 
     private static void getAddress() {
@@ -126,6 +126,7 @@ public class Main {
     }
 
     private static double nanoToSec(long time) {
-        return TimeUnit.SECONDS.convert(time, TimeUnit.NANOSECONDS);
+        long millis = TimeUnit.MILLISECONDS.convert(time, TimeUnit.NANOSECONDS);
+        return (double) millis / 1000.0;
     }
 }
