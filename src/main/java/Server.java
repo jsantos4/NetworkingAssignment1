@@ -25,9 +25,9 @@ public class Server {
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
             byte[] bytes = new byte[size];
-            is.readByte();
+            is.readFully(bytes);
             os.write(bytes);
-            System.out.println("Size sent to the client: " + size);
+            System.out.println("Size sent to client: " + size);
             serverSocket.close();
             is.close();
             os.close();

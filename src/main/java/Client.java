@@ -88,13 +88,6 @@ public class Client {
         is.close();
         os.close();
 
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted");
-            e.printStackTrace();
-        }
-
         return tcpTimes;
     }
 
