@@ -58,6 +58,9 @@ public class Server {
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             tcpSocket = serverSocket.accept();
+            int port = udpSocket.getLocalPort();
+            udpSocket.close();
+            udpSocket = new DatagramSocket(port);
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
 
@@ -101,9 +104,6 @@ public class Server {
             tcpSocket.close();
 
             System.out.println("\nUDP combos");
-            int port = udpSocket.getLocalPort();
-            udpSocket.close();
-            udpSocket = new DatagramSocket(port);
 
             byte[] oneKB = new byte[1024];
             byte[] halfKB = new byte[512];
