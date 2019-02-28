@@ -36,12 +36,12 @@ public class Client {
                     System.out.println("Waiting for response");
                 }
             }
-            is.readByte();
+            is.readFully(bytes);
             time = System.nanoTime() - startTime;
 
-            tcpSocket.close();
             is.close();
             os.close();
+            tcpSocket.close();
 
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -69,20 +69,20 @@ public class Client {
         for (int i = 0; i < 1024; ++i) {
             os.write(oneKB);
             is.readByte();
-            tcpTimes[0] += System.nanoTime() - start0;
         }
+        tcpTimes[0] = System.nanoTime() - start0;
         long start1 = System.nanoTime();
         for (int j = 0; j < 2048; ++j){
             os.write(halfKB);
             is.readByte();
-            tcpTimes[1] += System.nanoTime() - start1;
         }
+        tcpTimes[1] = System.nanoTime() - start1;
         long start2 = System.nanoTime();
         for (int k = 0; k < 4096; ++k) {
             os.write(quarterKB);
             is.readByte();
-            tcpTimes[2] += System.nanoTime() - start2;
         }
+        tcpTimes[2] = System.nanoTime() - start2;
 
         tcpSocket.close();
         is.close();
@@ -137,21 +137,20 @@ public class Client {
         for (int i = 0; i < 1024; ++i) {
             udpSocket.send(oneKBpacket);
             udpSocket.receive(echo);
-            udpTimes[0] = System.nanoTime() - start0;
         }
+        udpTimes[0] = System.nanoTime() - start0;
         long start1 = System.nanoTime();
         for (int j = 0; j < 2048; ++j){
             udpSocket.send(halfKBpacket);
             udpSocket.receive(echo);
-            udpTimes[1] = System.nanoTime() - start1;
         }
+        udpTimes[1] = System.nanoTime() - start1;
         long start2 = System.nanoTime();
         for (int k = 0; k < 4096; ++k) {
             udpSocket.send(quarterKBpacket);
             udpSocket.receive(echo);
-            udpTimes[2] = System.nanoTime() - start2;
-
         }
+        udpTimes[2] = System.nanoTime() - start2;
 
         udpSocket.close();
 
