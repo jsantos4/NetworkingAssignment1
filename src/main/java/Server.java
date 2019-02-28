@@ -20,13 +20,7 @@ public class Server {
     public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
-            while (socket == null) {
-                try {
-                    socket = serverSocket.accept();
-                } catch (SocketTimeoutException e) {
-                    System.out.println("Accept timed out: trying again");
-                }
-            }
+            socket = serverSocket.accept();
             DataInputStream is = new DataInputStream(socket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
