@@ -25,7 +25,8 @@ public class Client {
             os.write(bytes);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-            if (is.readByte() == 0) {
+            System.out.println(is.available());
+            if (is.readByte() == (byte)0) {
                 time = System.nanoTime() - startTime;
             } else {
                 is.readFully(bytes);
@@ -46,18 +47,13 @@ public class Client {
 
     public long[] sendTCPcombos(InetAddress address, int port) {
         long[] tcpTimes = new long[3];
-        System.out.println("Receiving 1024s");
-        for (int i = 0; i < 1024; ++i) {
+        for (int i = 0; i < 1024; ++i)
             tcpTimes[0] += sendTCPMessage(1024, address, port);
-        }
-        System.out.println("Receiving 512s");
-        for (int j = 0; j < 2048; ++j) {
+        for (int j = 0; j < 2048; ++j)
             tcpTimes[1] += sendTCPMessage(512, address, port);
-        }
-        System.out.println("Receiving 256s");
-        for (int k = 0; k < 4096; ++k) {
+        for (int k = 0; k < 4096; ++k)
             tcpTimes[2] += sendTCPMessage(256, address, port);
-        }
+
         return tcpTimes;
     }
 
