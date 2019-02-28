@@ -55,7 +55,7 @@ public class Server {
 
     public void receiveCombos() {
         try {
-            serverSocket.setSoTimeout(5000);
+            serverSocket.setSoTimeout(2000);
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
