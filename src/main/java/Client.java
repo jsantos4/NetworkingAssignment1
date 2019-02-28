@@ -18,8 +18,9 @@ public class Client {
         long time = 0;
         try {
             tcpSocket = new Socket(address, port);
+            tcpSocket.setSoTimeout(5000);
             byte[] bytes = new byte[size];
-            Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(2,256));
+            Arrays.fill(bytes, (byte)8 );
 
             long startTime = System.nanoTime();
             os = new DataOutputStream(tcpSocket.getOutputStream());
@@ -46,11 +47,6 @@ public class Client {
 
     public long[] sendTCPCombos(InetAddress address, int port) {
 
-        try{
-            tcpSocket.setSoTimeout(5000);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
         long[] tcpTimes = new long[3];
         for (int i = 0; i < 1024; ++i) {
             tcpTimes[0] += sendTCPMessage(1024, address, port);
