@@ -104,7 +104,7 @@ public class Main {
 
     private static double calcThroughput(long time, int size) {
         double bits = (double)size * 8.0;
-        return bits/nanoToSec(time);
+        return bits/(double)nanoToSec(time);
     }
 
     private static void getAddress() {
@@ -126,6 +126,6 @@ public class Main {
     }
 
     private static long nanoToSec(long time) {
-        return TimeUnit.NANOSECONDS.convert(time, TimeUnit.SECONDS);
+        return TimeUnit.SECONDS.convert(time, TimeUnit.NANOSECONDS);
     }
 }
