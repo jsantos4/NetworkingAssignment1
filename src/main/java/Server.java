@@ -47,7 +47,6 @@ public class Server {
             packet = new DatagramPacket(bytes, size, packet.getAddress(), packet.getPort());
             udpSocket.send(packet);
             System.out.println("Size sent to the client: " + size);
-            udpSocket.close();
 
         } catch (IOException e) {
             e.printStackTrace();
