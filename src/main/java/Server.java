@@ -79,7 +79,7 @@ public class Server {
                 os.write(echo);
                 is.close();
                 os.close();
-                socket.close();
+                //socket.close();
             }
             System.out.println("Receiving 512s");
             for (int j = 0; j < 2048; ++j) {
