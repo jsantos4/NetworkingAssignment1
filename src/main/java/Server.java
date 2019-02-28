@@ -57,22 +57,24 @@ public class Server {
             Socket tcpSocket = null;
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
-            while (tcpSocket == null) {
+            tcpSocket = serverSocket.accept();
+            DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
+            DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
+
+            /*while (tcpSocket == null) {
                 try {
                     tcpSocket = serverSocket.accept();
                 } catch (SocketTimeoutException e) {
                     System.out.println("Accept timed out: trying again");
                 }
-            }
+            }*/
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
-                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
                 byte[] echo = {(byte)0};
                 os.write(echo);
             }
@@ -81,39 +83,42 @@ public class Server {
                 if (j == 2048 / 2) {
                     System.out.println("50%");
                 }
-                tcpSocket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[512];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
-                os.write(new byte[1]);
+                byte[] echo = {(byte)0};
+                os.write(echo);
             }
             System.out.println("Receiving 256s");
             for (int k = 0; k < 4096; ++k) {
                 if (k == 4096 / 2) {
                     System.out.println("50%");
                 }
-                tcpSocket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[256];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
-                os.write(new byte[1]);
+                byte[] echo = {(byte)0};
+                os.write(echo);
             }
 
             tcpSocket.close();
 
             System.out.println("\nUDP combos");
+            byte[] oneKB = new byte[1024];
+            byte[] halfKB = new byte[512];
+            byte[] quarterKB = new byte[256];
+            byte[] echoArr = new byte[1];
+
+            DatagramPacket oneKBpacket = new DatagramPacket(oneKB, 1024);
+            DatagramPacket halfKBpacket = new DatagramPacket(halfKB, 512);
+            DatagramPacket quarterKBpacket = new DatagramPacket(quarterKB, 256);
+            DatagramPacket echo = new DatagramPacket(echoArr, 1);
+
             System.out.println("Receiving 1024s");
             for (int l = 0; l < 1024; ++l) {
                 if (l == 1024 / 2) {
                     System.out.println("50%");
                 }
-                byte[] bytes = new byte[1024];
-                DatagramPacket packet = new DatagramPacket(bytes, 1024);
-                udpSocket.receive(packet);
-                packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
-                udpSocket.send(packet);
+                udpSocket.receive(oneKBpacket);
+                udpSocket.send(echo);
             }
 
             System.out.println("Receiving 512s");
@@ -121,11 +126,8 @@ public class Server {
                 if (m == 2048 / 2) {
                     System.out.println("50%");
                 }
-                byte[] bytes = new byte[512];
-                DatagramPacket packet = new DatagramPacket(bytes, 512);
-                udpSocket.receive(packet);
-                packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
-                udpSocket.send(packet);
+                udpSocket.receive(halfKBpacket);
+                udpSocket.send(echo);
             }
 
             System.out.println("Receiving 256s");
@@ -133,11 +135,8 @@ public class Server {
                 if (n == 4096 / 2) {
                     System.out.println("50%");
                 }
-                byte[] bytes = new byte[256];
-                DatagramPacket packet = new DatagramPacket(bytes, 256);
-                udpSocket.receive(packet);
-                packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
-                udpSocket.send(packet);
+                udpSocket.receive(quarterKBpacket);
+                udpSocket.send(echo);
             }
         } catch (IOException e) {
             e.printStackTrace();
