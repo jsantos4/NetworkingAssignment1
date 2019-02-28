@@ -69,7 +69,6 @@ public class Server {
                 }
             }*/
             for (int i = 0; i < 1024; ++i) {
-                System.out.println(i);
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
@@ -102,6 +101,10 @@ public class Server {
             tcpSocket.close();
 
             System.out.println("\nUDP combos");
+            int port = udpSocket.getLocalPort();
+            udpSocket.close();
+            udpSocket = new DatagramSocket(port);
+
             byte[] oneKB = new byte[1024];
             byte[] halfKB = new byte[512];
             byte[] quarterKB = new byte[256];
