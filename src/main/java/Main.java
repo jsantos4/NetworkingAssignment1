@@ -55,11 +55,11 @@ public class Main {
                 throughputSpeeds[3] = calcThroughput(tcpClient.sendTCPMessage(1024 * 256), 1024 * 256);
                 throughputSpeeds[4] = calcThroughput(tcpClient.sendTCPMessage(1024 * 1000), 1024 * 1000);
 
-                System.out.println("Speed of 1K: " + throughputSpeeds[0] + "Mbps");
-                System.out.println("Speed of 16K: " + throughputSpeeds[1] + "Mbps");
-                System.out.println("Speed of 64K: " + throughputSpeeds[2] + "Mbps");
-                System.out.println("Speed of 256K: " + throughputSpeeds[3] + "Mbps");
-                System.out.println("Speed of 1M: " + throughputSpeeds[4] + "Mbps");
+                System.out.println("Speed of 1K: " + throughputSpeeds[0] + " Mb/s");
+                System.out.println("Speed of 16K: " + throughputSpeeds[1] + " Mb/s");
+                System.out.println("Speed of 64K: " + throughputSpeeds[2] + " Mb/s");
+                System.out.println("Speed of 256K: " + throughputSpeeds[3] + " Mb/s");
+                System.out.println("Speed of 1M: " + throughputSpeeds[4] + " Mb/s");
 
                 //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
                 System.out.println("\n1MB variations");
@@ -104,8 +104,7 @@ public class Main {
     }
 
     private static double calcThroughput(long time, int size) {
-        double megabits = ((double)size * 8.0);
-        return (megabits/nanoToSec(time)) * 1000000.0;
+        return (((double) size * 8.0)/nanoToSec(time)) / 1000000.0;
     }
 
     private static void getAddress() {
