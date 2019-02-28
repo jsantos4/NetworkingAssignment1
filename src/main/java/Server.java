@@ -11,7 +11,6 @@ public class Server {
         try {
             serverSocket = new ServerSocket(0);
             udpSocket = new DatagramSocket(0);
-            serverSocket.setSoTimeout(10000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -21,7 +20,6 @@ public class Server {
         try {
             System.out.println("Server listening");
             socket = serverSocket.accept();
-            socket.setSoTimeout(10000);
             DataInputStream is = new DataInputStream(socket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
@@ -62,6 +60,7 @@ public class Server {
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
                 Socket socket1 = serverSocket.accept();
+                socket1.setSoTimeout(10000);
                 DataInputStream is = new DataInputStream(socket1.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
