@@ -26,6 +26,8 @@ public class Client {
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             time = System.nanoTime() - startTime;
+            is.close();
+            os.close();
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
@@ -41,13 +43,22 @@ public class Client {
 
     public long[] sendTCPcombos(InetAddress address, int port) {
         long[] tcpTimes = new long[3];
-        for (int i = 0; i < 1024; ++i)
+        for (int i = 0; i < 1024; ++i) {
             tcpTimes[0] += sendTCPMessage(1024, address, port);
-        for (int j = 0; j < 2048; ++j)
+            if (i == 1024 / 2) {
+                System.out.println("50%");
+            }
+        }
+        for (int j = 0; j < 2048; ++j){
             tcpTimes[1] += sendTCPMessage(512, address, port);
-        for (int k = 0; k < 4096; ++k)
+            if (j == 2048 / 2)
+                System.out.println("50%");
+        }
+        for (int k = 0; k < 4096; ++k) {
             tcpTimes[2] += sendTCPMessage(256, address, port);
-
+            if (k == 4096 /2)
+                System.out.println("50%");
+        }
         return tcpTimes;
     }
 

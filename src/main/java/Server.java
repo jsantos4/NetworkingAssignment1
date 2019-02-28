@@ -27,6 +27,8 @@ public class Server {
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             os.write(bytes);
             System.out.println("Size sent to the client: " + size);
+            is.close();
+            os.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,6 +47,7 @@ public class Server {
             packet = new DatagramPacket(bytes, size, packet.getAddress(), packet.getPort());
             udpSocket.send(packet);
             System.out.println("Size sent to the client: " + size);
+            udpSocket.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,6 +67,8 @@ public class Server {
                 DataOutputStream os = new DataOutputStream(socket1.getOutputStream());
                 byte[] echo = {(byte)0};
                 os.write(echo);
+                is.close();
+                os.close();
                 socket1.close();
             }
             System.out.println("Receiving 512s");
@@ -74,6 +79,8 @@ public class Server {
                 is.readFully(bytes);
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 os.write(new byte[1]);
+                is.close();
+                os.close();
                 socket.close();
             }
             System.out.println("Receiving 256s");
@@ -84,6 +91,8 @@ public class Server {
                 is.readFully(bytes);
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 os.write(new byte[1]);
+                is.close();
+                os.close();
                 socket.close();
             }
 
@@ -96,6 +105,7 @@ public class Server {
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
+                udpSocket.close();
             }
 
             System.out.println("Receiving 512s");
@@ -106,6 +116,7 @@ public class Server {
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
+                udpSocket.close();
             }
 
             System.out.println("Receiving 256s");
@@ -115,6 +126,7 @@ public class Server {
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
+                udpSocket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
