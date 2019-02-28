@@ -10,7 +10,6 @@ public class Main {
         System.out.println("Side? (0 == client)");
         Scanner scanner = new Scanner(System.in);
         int side = scanner.nextInt();
-        Client Client = new Client();
         Server Server = new Server();
         long[] rttTimes = new long[6];
         double[] throughputSpeeds = new double[5];
@@ -24,18 +23,20 @@ public class Main {
             int tcpPort = scanner.nextInt();
             System.out.println("UDP Port?");
             int udpPort = scanner.nextInt();
+            Client tcpClient = new Client(dest, tcpPort);
+            Client udpClient = new Client(dest, udpPort);
 
 
             try {
 
                 //RTTs----------------------------------------------------------------------------------------------------------------------------------
                 System.out.println("\nRTTs");
-                rttTimes[0] = Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
-                rttTimes[1] = Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
-                rttTimes[2] = Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
-                rttTimes[3] = Client.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
-                rttTimes[4] = Client.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
-                rttTimes[5] = Client.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
+                rttTimes[0] = tcpClient.sendTCPMessage(1);
+                rttTimes[1] = tcpClient.sendTCPMessage(64);
+                rttTimes[2] = tcpClient.sendTCPMessage(1024);
+                rttTimes[3] = udpClient.sendUDPMessage(1, InetAddress.getByName(dest), udpPort);
+                rttTimes[4] = udpClient.sendUDPMessage(64, InetAddress.getByName(dest), udpPort);
+                rttTimes[5] = udpClient.sendUDPMessage(1024, InetAddress.getByName(dest), udpPort);
 
                 System.out.println("TCPs 1, 64, 1024:");
                 System.out.println("RTT in nanoseconds: " + rttTimes[0]);
@@ -48,11 +49,11 @@ public class Main {
 
                 //Throughput speeds-------------------------------------------------------------------------------------------------------------------
                 System.out.println("\nThroughput speeds");
-                throughputSpeeds[0] = calcThroughput(Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort), 1024);
-                throughputSpeeds[1] = calcThroughput(Client.sendTCPMessage(1024 * 16, InetAddress.getByName(dest), tcpPort), 1024 * 16);
-                throughputSpeeds[2] = calcThroughput(Client.sendTCPMessage(1024 * 64, InetAddress.getByName(dest), tcpPort), 1024 * 64);
-                throughputSpeeds[3] = calcThroughput(Client.sendTCPMessage(1024 * 256, InetAddress.getByName(dest), tcpPort), 1024 * 256);
-                throughputSpeeds[4] = calcThroughput(Client.sendTCPMessage(1024 * 1000, InetAddress.getByName(dest), tcpPort), 1024 * 1000);
+                throughputSpeeds[0] = calcThroughput(tcpClient.sendTCPMessage(1024), 1024);
+                throughputSpeeds[1] = calcThroughput(tcpClient.sendTCPMessage(1024 * 16), 1024 * 16);
+                throughputSpeeds[2] = calcThroughput(tcpClient.sendTCPMessage(1024 * 64), 1024 * 64);
+                throughputSpeeds[3] = calcThroughput(tcpClient.sendTCPMessage(1024 * 256), 1024 * 256);
+                throughputSpeeds[4] = calcThroughput(tcpClient.sendTCPMessage(1024 * 1000), 1024 * 1000);
 
                 System.out.println("Speed of 1K: " + throughputSpeeds[0] + "Mbps");
                 System.out.println("Speed of 16K: " + throughputSpeeds[1] + "Mbps");
@@ -62,8 +63,8 @@ public class Main {
 
                 //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
                 System.out.println("\n1MB variations");
-                tcpVariations = Client.sendTCPCombos(InetAddress.getByName(dest), tcpPort);
-                udpVariations = Client.sendUDPCombos(InetAddress.getByName(dest), udpPort);
+                tcpVariations = tcpClient.sendTCPCombos();
+                udpVariations = udpClient.sendUDPCombos();
 
                 System.out.println("\nTCPs 1024 x 1024MB, 2048 x 512MB, 4096 x 256MB:");
                 System.out.println("Total of all RTTs: " + nanoToSec(tcpVariations[0]));
@@ -75,7 +76,7 @@ public class Main {
                 System.out.println("Total of all RTTs: " + nanoToSec(udpVariations[2]));
 
 
-            } catch (UnknownHostException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (side == 1) {

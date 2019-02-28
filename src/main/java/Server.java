@@ -3,16 +3,15 @@ import java.net.*;
 
 public class Server {
 
-    private Socket socket;
     private ServerSocket serverSocket;
+    private Socket tcpSocket;
     private DatagramSocket udpSocket;
 
     public Server(){
         try {
             serverSocket = new ServerSocket(0);
             udpSocket = new DatagramSocket(0);
-            //serverSocket.setSoTimeout(2000);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -20,16 +19,16 @@ public class Server {
     public void receiveTCPMessage(int size) {
         try {
             System.out.println("Server listening");
-            socket = serverSocket.accept();
-            DataInputStream is = new DataInputStream(socket.getInputStream());
+            tcpSocket = serverSocket.accept();
+            DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             byte[] bytes = new byte[size];
             is.readFully(bytes);
-            DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+            DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
             System.out.println("Size sent to the client: " + size);
             is.close();
             os.close();
-            socket.close();
+            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,62 +55,54 @@ public class Server {
 
     public void receiveCombos() {
         try {
-            socket = null;
-            serverSocket.setSoTimeout(2000);
+            tcpSocket = null;
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
+            while (tcpSocket == null) {
+                try {
+                    tcpSocket = serverSocket.accept();
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Accept timed out: trying again");
+                }
+            }
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
-                while (socket == null) {
-                    try {
-                        socket = serverSocket.accept();
-                    } catch (SocketTimeoutException e) {
-                        System.out.println("Accept timed out: trying again");
-                    }
-                }
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
-                DataInputStream is = new DataInputStream(socket.getInputStream());
+                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
                 byte[] echo = {(byte)0};
                 os.write(echo);
-                is.close();
-                os.close();
-                //socket.close();
             }
             System.out.println("Receiving 512s");
             for (int j = 0; j < 2048; ++j) {
                 if (j == 2048 / 2) {
                     System.out.println("50%");
                 }
-                socket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(socket.getInputStream());
+                tcpSocket = serverSocket.accept();
+                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[512];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
                 os.write(new byte[1]);
-                is.close();
-                os.close();
-                socket.close();
             }
             System.out.println("Receiving 256s");
             for (int k = 0; k < 4096; ++k) {
                 if (k == 4096 / 2) {
                     System.out.println("50%");
                 }
-                socket = serverSocket.accept();
-                DataInputStream is = new DataInputStream(socket.getInputStream());
+                tcpSocket = serverSocket.accept();
+                DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
                 byte[] bytes = new byte[256];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
+                DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
                 os.write(new byte[1]);
-                is.close();
-                os.close();
-                socket.close();
             }
+
+            tcpSocket.close();
 
             System.out.println("\nUDP combos");
             System.out.println("Receiving 1024s");
