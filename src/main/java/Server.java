@@ -60,7 +60,7 @@ public class Server {
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                byte[] echo = {(byte)1};
+                byte[] echo = {(byte)0};
                 os.write(echo);
                 socket.close();
             }

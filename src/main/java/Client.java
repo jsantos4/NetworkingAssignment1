@@ -18,7 +18,7 @@ public class Client {
 
             tcpSocket = new Socket(address, port);
             byte[] bytes = new byte[size];
-            Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
+            Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(2,256));
 
             long startTime = System.nanoTime();
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
@@ -26,12 +26,12 @@ public class Client {
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
             System.out.println(is.available());
-            if (is.available() == 1) {
-                is.readByte();
+            if (is.readByte() == 0) {
+                time = System.nanoTime() - startTime;
             } else {
                 is.readFully(bytes);
+                time = System.nanoTime() - startTime;
             }
-            time = System.nanoTime() - startTime;
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
