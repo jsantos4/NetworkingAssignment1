@@ -7,6 +7,8 @@ public class Client {
 
     private static Socket tcpSocket;
     private static DatagramSocket udpSocket;
+    private DataOutputStream os;
+    private DataInputStream is;
 
     public Client() {
 
@@ -21,19 +23,19 @@ public class Client {
             Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(2,256));
 
             long startTime = System.nanoTime();
-            DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
+            os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
 
-            DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
+            is = new DataInputStream(tcpSocket.getInputStream());
             is.readByte();
             time = System.nanoTime() - startTime;
-            is.close();
-            os.close();
 
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {
             try {
+                is.close();
+                os.close();
                 tcpSocket.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -43,10 +45,11 @@ public class Client {
 
     }
 
-    public long[] sendTCPcombos(InetAddress address, int port) {
+    public long[] sendTCPCombos(InetAddress address, int port) {
         long[] tcpTimes = new long[3];
         for (int i = 0; i < 1024; ++i) {
             tcpTimes[0] += sendTCPMessage(1024, address, port);
+            System.out.println(i);
             if (i == 1024 / 2) {
                 System.out.println("50%");
             }

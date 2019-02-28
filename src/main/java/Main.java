@@ -62,7 +62,7 @@ public class Main {
 
                 //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
                 System.out.println("\n1MB variations");
-                oneMtcpVariations = Client.sendTCPcombos(InetAddress.getByName(dest), tcpPort);
+                oneMtcpVariations = Client.sendTCPCombos(InetAddress.getByName(dest), tcpPort);
                 oneMudpVariations = Client.sendUDPcombos(InetAddress.getByName(dest), udpPort);
 
                 System.out.println("TCPs 1024x1024, 2048x512, 4096x256:");
