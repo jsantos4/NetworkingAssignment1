@@ -59,9 +59,9 @@ public class Server {
             serverSocket.setSoTimeout(2000);
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
-            socket = serverSocket.accept();
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
+                socket = serverSocket.accept();
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
