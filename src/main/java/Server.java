@@ -56,12 +56,18 @@ public class Server {
 
     public void receiveCombos() {
         try {
+            socket = null;
             serverSocket.setSoTimeout(2000);
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
-                System.out.println(i);
-                socket = serverSocket.accept();
+                while (socket == null) {
+                    try {
+                        socket = serverSocket.accept();
+                    } catch (SocketTimeoutException e) {
+                        System.out.println("Accept timed out: trying again");
+                    }
+                }
                 if (i == 1024 / 2) {
                     System.out.println("50%");
                 }
