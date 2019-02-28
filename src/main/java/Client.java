@@ -19,7 +19,6 @@ public class Client {
         long time = 0;
         try {
             Socket tcpSocket = new Socket(InetAddress.getByName(address), port);
-            System.out.println(tcpSocket.isClosed());
             tcpSocket.setSoTimeout(2000);
             DataOutputStream os;
             DataInputStream is = null;

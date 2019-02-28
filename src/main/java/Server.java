@@ -16,18 +16,21 @@ public class Server {
     }
 
     public void receiveTCPMessage(int size) {
+        int port = serverSocket.getLocalPort();
         try {
+            serverSocket.close();
+            serverSocket = new ServerSocket(port);
             System.out.println("Server listening");
             Socket tcpSocket = serverSocket.accept();
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-            byte[] bytes = new byte[size];
-            is.readFully(bytes);
             DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());
+            byte[] bytes = new byte[size];
+            is.readByte();
             os.write(bytes);
             System.out.println("Size sent to the client: " + size);
+            serverSocket.close();
             is.close();
             os.close();
-            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
