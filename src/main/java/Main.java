@@ -54,11 +54,11 @@ public class Main {
                 throughputSpeeds[3] = calcThroughput(Client.sendTCPMessage(1024 * 256, InetAddress.getByName(dest), tcpPort), 1024 * 256);
                 throughputSpeeds[4] = calcThroughput(Client.sendTCPMessage(1024 * 1000, InetAddress.getByName(dest), tcpPort), 1024 * 1000);
 
-                System.out.println("Speed of 1K: " + throughputSpeeds[0] + " bits/S");
-                System.out.println("Speed of 16K: " + throughputSpeeds[1] + " bits/S");
-                System.out.println("Speed of 64K: " + throughputSpeeds[2] + " bits/S");
-                System.out.println("Speed of 256K: " + throughputSpeeds[3] + " bits/S");
-                System.out.println("Speed of 1M: " + throughputSpeeds[4] + " bits/S");
+                System.out.println("Speed of 1K: " + throughputSpeeds[0] + "Mbps");
+                System.out.println("Speed of 16K: " + throughputSpeeds[1] + "Mbps");
+                System.out.println("Speed of 64K: " + throughputSpeeds[2] + "Mbps");
+                System.out.println("Speed of 256K: " + throughputSpeeds[3] + "Mbps");
+                System.out.println("Speed of 1M: " + throughputSpeeds[4] + "Mbps");
 
                 //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
                 System.out.println("\n1MB variations");
@@ -103,8 +103,8 @@ public class Main {
     }
 
     private static double calcThroughput(long time, int size) {
-        double bits = (double)size * 8.0;
-        return bits/(double)nanoToSec(time);
+        double megabits = ((double)size * 8.0) * 1000000.0;
+        return megabits/(double)nanoToSec(time);
     }
 
     private static void getAddress() {
@@ -125,7 +125,7 @@ public class Main {
             System.out.println("Public IP Address: " + systemipaddress);
     }
 
-    private static long nanoToSec(long time) {
+    private static double nanoToSec(long time) {
         return TimeUnit.SECONDS.convert(time, TimeUnit.NANOSECONDS);
     }
 }
