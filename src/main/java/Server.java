@@ -59,24 +59,16 @@ public class Server {
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
-                System.out.println(i);
-                Socket socket1 = null;
-                do {
-                    try {
-                        socket1 = serverSocket.accept();
-                    } catch (SocketTimeoutException e) {
-                        System.out.println("Accept timed out: trying again");
-                    }
-                } while (socket1 == null);
-                DataInputStream is = new DataInputStream(socket1.getInputStream());
+                socket = serverSocket.accept();
+                DataInputStream is = new DataInputStream(socket.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
-                DataOutputStream os = new DataOutputStream(socket1.getOutputStream());
+                DataOutputStream os = new DataOutputStream(socket.getOutputStream());
                 byte[] echo = {(byte)0};
                 os.write(echo);
                 is.close();
                 os.close();
-                socket1.close();
+                socket.close();
             }
             System.out.println("Receiving 512s");
             for (int j = 0; j < 2048; ++j) {
@@ -106,24 +98,20 @@ public class Server {
             System.out.println("\nUDP combos");
             System.out.println("Receiving 1024s");
             for (int l = 0; l < 1024; ++l) {
-
                 byte[] bytes = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(bytes, 1024);
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
-                udpSocket.close();
             }
 
             System.out.println("Receiving 512s");
             for (int m = 0; m < 2048; ++m) {
-
                 byte[] bytes = new byte[512];
                 DatagramPacket packet = new DatagramPacket(bytes, 512);
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
-                udpSocket.close();
             }
 
             System.out.println("Receiving 256s");
@@ -133,7 +121,6 @@ public class Server {
                 udpSocket.receive(packet);
                 packet = new DatagramPacket(bytes, 1, packet.getAddress(), packet.getPort());
                 udpSocket.send(packet);
-                udpSocket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

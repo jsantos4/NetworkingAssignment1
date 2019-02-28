@@ -14,8 +14,8 @@ public class Main {
         Server Server = new Server();
         long[] rttTimes = new long[6];
         double[] throughputSpeeds = new double[5];
-        long[] oneMtcpVariations = new long[3];
-        long[] oneMudpVariations = new long[3];
+        long[] tcpVariations;
+        long[] udpVariations;
 
         if (side == 0) {
             System.out.println("Destination?");
@@ -62,17 +62,17 @@ public class Main {
 
                 //Combinations of 1MB total messages in different sizes--------------------------------------------------------------------------------
                 System.out.println("\n1MB variations");
-                oneMtcpVariations = Client.sendTCPCombos(InetAddress.getByName(dest), tcpPort);
-                oneMudpVariations = Client.sendUDPcombos(InetAddress.getByName(dest), udpPort);
+                tcpVariations = Client.sendTCPCombos(InetAddress.getByName(dest), tcpPort);
+                udpVariations = Client.sendUDPCombos(InetAddress.getByName(dest), udpPort);
 
-                System.out.println("TCPs 1024x1024, 2048x512, 4096x256:");
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[0]));
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[1]));
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMtcpVariations[2]));
-                System.out.println("UDPs 1024x1024, 2048x512, 4096x256:");
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[0]));
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[1]));
-                System.out.println("Total of all RTTs: " + nanoToSec(oneMudpVariations[2]));
+                System.out.println("\nTCPs 1024 x 1024MB, 2048 x 512MB, 4096 x 256MB:");
+                System.out.println("Total of all RTTs: " + nanoToSec(tcpVariations[0]));
+                System.out.println("Total of all RTTs: " + nanoToSec(tcpVariations[1]));
+                System.out.println("Total of all RTTs: " + nanoToSec(tcpVariations[2]));
+                System.out.println("UDPs 1024 x 1024MB, 2048 x 512MB, 4096 x 256MB:");
+                System.out.println("Total of all RTTs: " + nanoToSec(udpVariations[0]));
+                System.out.println("Total of all RTTs: " + nanoToSec(udpVariations[1]));
+                System.out.println("Total of all RTTs: " + nanoToSec(udpVariations[2]));
 
 
             } catch (UnknownHostException e) {
