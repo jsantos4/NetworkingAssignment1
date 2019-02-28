@@ -25,7 +25,11 @@ public class Client {
             os.write(bytes);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
-            is.readFully(bytes);
+            if (is.available() == 1) {
+                is.readByte();
+            } else {
+                is.readFully(bytes);
+            }
             time = System.nanoTime() - startTime;
         } catch (Exception exception) {
             exception.printStackTrace();
