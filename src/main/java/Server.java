@@ -60,8 +60,8 @@ public class Server {
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
                 DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-                socket.close();
                 os.write(new byte[1]);
+                socket.close();
             }
             for (int j = 0; j < 2048; ++j) {
                 socket = serverSocket.accept();
