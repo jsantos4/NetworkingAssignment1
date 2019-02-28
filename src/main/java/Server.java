@@ -55,12 +55,19 @@ public class Server {
 
     public void receiveCombos() {
         try {
+            serverSocket.setSoTimeout(5000);
             System.out.println("\nTCP combos");
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
-                serverSocket.setSoTimeout(5000);
-                Socket socket1 = serverSocket.accept();
+                Socket socket1 = null;
+                do {
+                    try {
+                        socket1 = serverSocket.accept();
+                    } catch (SocketTimeoutException e) {
+                        System.out.println("Accept timed out: trying again");
+                    }
+                } while (socket1 == null);
                 DataInputStream is = new DataInputStream(socket1.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
