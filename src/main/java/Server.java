@@ -59,8 +59,8 @@ public class Server {
             System.out.println("Receiving 1024s");
             for (int i = 0; i < 1024; ++i) {
                 System.out.println(i);
+                serverSocket.setSoTimeout(5000);
                 Socket socket1 = serverSocket.accept();
-                socket1.setSoTimeout(10000);
                 DataInputStream is = new DataInputStream(socket1.getInputStream());
                 byte[] bytes = new byte[1024];
                 is.readFully(bytes);
