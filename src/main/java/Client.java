@@ -17,8 +17,8 @@ public class Client {
     public long sendTCPMessage(int size, InetAddress address, int port) {
         long time = 0;
         try {
-
             tcpSocket = new Socket(address, port);
+            tcpSocket.setSoTimeout(10000);
             byte[] bytes = new byte[size];
             Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(2,256));
 
@@ -46,6 +46,7 @@ public class Client {
     }
 
     public long[] sendTCPCombos(InetAddress address, int port) {
+
         long[] tcpTimes = new long[3];
         for (int i = 0; i < 1024; ++i) {
             tcpTimes[0] += sendTCPMessage(1024, address, port);
