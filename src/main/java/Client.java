@@ -25,6 +25,7 @@ public class Client {
             os.write(bytes);
 
             DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
+            System.out.println(is.available());
             if (is.available() == 1) {
                 is.readByte();
             } else {
