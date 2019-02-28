@@ -27,12 +27,7 @@ public class Client {
             os.write(bytes);
 
             is = new DataInputStream(tcpSocket.getInputStream());
-            if (is.readByte() == 0){
-                
-            } else {
-                for (int i = 0; i < size; ++i)
-                    is.readByte();
-            }
+            System.out.println(is.readByte());
             time = System.nanoTime() - startTime;
 
         } catch (IOException exception) {
@@ -54,7 +49,6 @@ public class Client {
         long[] tcpTimes = new long[3];
         for (int i = 0; i < 1024; ++i) {
             tcpTimes[0] += sendTCPMessage(1024, address, port);
-            System.out.println(i);
             if (i == 1024 / 2) {
                 System.out.println("50%");
             }
