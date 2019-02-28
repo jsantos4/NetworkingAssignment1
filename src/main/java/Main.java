@@ -29,7 +29,7 @@ public class Main {
             try {
 
                 //RTTs----------------------------------------------------------------------------------------------------------------------------------
-                System.out.println("\n RTTs");
+                System.out.println("\nRTTs");
                 rttTimes[0] = Client.sendTCPMessage(1, InetAddress.getByName(dest), tcpPort);
                 rttTimes[1] = Client.sendTCPMessage(64, InetAddress.getByName(dest), tcpPort);
                 rttTimes[2] = Client.sendTCPMessage(1024, InetAddress.getByName(dest), tcpPort);
