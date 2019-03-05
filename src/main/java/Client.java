@@ -20,22 +20,13 @@ public class Client {
         try {
             Socket tcpSocket = new Socket(InetAddress.getByName(address), port);
             tcpSocket.setSoTimeout(2000);
-            DataOutputStream os;
-            DataInputStream is = null;
             byte[] bytes = new byte[size];
             Arrays.fill(bytes, (byte)8 );
+            DataOutputStream os = new DataOutputStream(tcpSocket.getOutputStream());;
+            DataInputStream is = new DataInputStream(tcpSocket.getInputStream());
 
             long startTime = System.nanoTime();
-            os = new DataOutputStream(tcpSocket.getOutputStream());
             os.write(bytes);
-
-            while (is == null) {
-                try {
-                    is = new DataInputStream(tcpSocket.getInputStream());
-                } catch (SocketTimeoutException e) {
-                    System.out.println("Waiting for response");
-                }
-            }
             is.readFully(bytes);
             time = System.nanoTime() - startTime;
 
