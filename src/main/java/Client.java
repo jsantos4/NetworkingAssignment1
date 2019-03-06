@@ -90,11 +90,11 @@ public class Client {
             byte[] bytes = new byte[size];
             Arrays.fill(bytes, (byte) ThreadLocalRandom.current().nextInt(256));
             DatagramPacket packet = new DatagramPacket(bytes, size, address, port);
+            packet = new DatagramPacket(bytes, size);
 
             long startTime = System.nanoTime();
 
             udpSocket.send(packet);
-            packet = new DatagramPacket(bytes, size);
             udpSocket.receive(packet);
 
             time = System.nanoTime() - startTime;
@@ -144,13 +144,6 @@ public class Client {
         udpTimes[2] = System.nanoTime() - start2;
 
         udpSocket.close();
-
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted");
-            e.printStackTrace();
-        }
 
         return udpTimes;
     }

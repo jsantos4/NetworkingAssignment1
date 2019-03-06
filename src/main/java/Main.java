@@ -10,7 +10,7 @@ public class Main {
         System.out.println("Side? (0 == client)");
         Scanner scanner = new Scanner(System.in);
         int side = scanner.nextInt();
-        Server Server = new Server();
+        Server server = new Server();
         long[] rttTimes = new long[6];
         double[] throughputSpeeds = new double[5];
         long[] tcpVariations;
@@ -81,23 +81,23 @@ public class Main {
             }
         } else if (side == 1) {
             getAddress();
-            Server.getPort();
+            server.getPort();
 
-            Server.receiveTCPMessage(1);
-            Server.receiveTCPMessage(64);
-            Server.receiveTCPMessage(1024);
+            server.receiveTCPMessage(1);
+            server.receiveTCPMessage(64);
+            server.receiveTCPMessage(1024);
 
-            Server.receiveUDPMessage(1);
-            Server.receiveUDPMessage(64);
-            Server.receiveUDPMessage(1024);
+            server.receiveUDPMessage(1);
+            server.receiveUDPMessage(64);
+            server.receiveUDPMessage(1024);
 
-            Server.receiveTCPMessage(1024);
-            Server.receiveTCPMessage(1024 * 16);
-            Server.receiveTCPMessage(1024 * 64);
-            Server.receiveTCPMessage(1024 * 256);
-            Server.receiveTCPMessage(1024 * 1000);
+            server.receiveTCPMessage(1024);
+            server.receiveTCPMessage(1024 * 16);
+            server.receiveTCPMessage(1024 * 64);
+            server.receiveTCPMessage(1024 * 256);
+            server.receiveTCPMessage(1024 * 1000);
 
-            Server.receiveCombos();
+            server.receiveCombos();
 
 
         }
